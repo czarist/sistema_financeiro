@@ -12,6 +12,10 @@ class MovimentacaoController extends CI_Controller {
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_rules('descricao', 'Descrição', 'required');
+		$this->form_validation->set_rules('tipo', 'Tipo', 'required');
+		$this->form_validation->set_rules('data', 'Data', 'required');
+		$this->form_validation->set_rules('valor', 'Valor', 'required|numeric');
+
 		if($this->form_validation->run() == false) {
 			return $this->load->view('movimentacao/cadastrar_movimentacao');
 		}else{

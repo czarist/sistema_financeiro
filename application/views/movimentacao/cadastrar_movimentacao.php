@@ -16,26 +16,32 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-6 offset-3">
-				<?php echo validation_errors(); ?>
+				<?php 
+				if (validation_errors()) {
+             echo
+                '<div class="alert alert-danger mt-1" role="alert">
+									'. validation_errors() . '
+								</div>';
+                }?>
 				<form action="cadastrar" method="POST">
 					<div class="form-group mt-5">
-						<label for="descricao">Descricao</label>
-						<input type="text" id="descricao" class="form-control" placeholder="descricao" name="descricao" />
+						<label for="descricao">Descrição</label>
+						<input type="text" id="descricao" class="form-control" placeholder="Descrição" name="descricao" />
 					</div>
 					<div class="form-group">
 						<label for="valor">Valor</label>
-						<input type="text" id="valor" class="form-control" placeholder="valor" name="valor" />
+						<input type="text" id="valor" class="form-control" placeholder="Balor" name="valor" />
 					</div>
 					<div class="form-group">
 						<label for="tipo">Tipo</label>
-						<input type="text" id="tipo" class="form-control" placeholder="tipo" name="tipo" />
+						<input type="text" id="tipo" class="form-control" placeholder="Tipo" name="tipo" />
 					</div>
 					<div class="form-group">
 						<label for="data">Data</label>
-						<input type="text" id="data" class="form-control" placeholder="data" name="data" />
+						<input type="text" id="data" class="form-control" placeholder="Data" name="data" />
 					</div>
 					<div class="form-group">
-						<input type="submit" id="enviar" class="btn btn-default" name="enviar" />
+						<input type="submit" id="enviar" class="btn btn-default w-100" name="enviar" />
 					</div>
 				</form>
 			</div>
