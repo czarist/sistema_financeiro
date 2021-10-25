@@ -19,7 +19,20 @@ class MovimentacaoController extends CI_Controller {
 		if($this->form_validation->run() == false) {
 			return $this->load->view('movimentacao/cadastrar_movimentacao');
 		}else{
-			echo 'validado';
+			$this->load->model('Movimentacao', "movimentacao", true);
+
+			date_default_timezone_set('America/Sao_Paulo');
+			
+			$data = [
+				'descricao' => $this->input->post('descricao'),
+				'tipo' => $this->input->post('tipo'),
+				'data' => $this->input->post('data'),
+				'valor' => $this->input->post('valor'),
+				'datahora_cadastro' => date('Y-m-d H:i:s'),
+				'datahora_ultimaalteracao' => date('Y-m-d H:i:s'),
+			];
+
+			$this->movimentacao->insert($data);
 		}
 	}
 }
