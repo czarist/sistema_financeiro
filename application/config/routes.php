@@ -57,3 +57,6 @@ $route['rota'] = 'Welcome/primeira_rota';
 // movimentacoes
 $route['movimentacao/cadastrar']['GET'] = 'MovimentacaoController/formCadastroMovimentacao';
 $route['movimentacao/cadastrar']['POST'] = 'MovimentacaoController/inserirMovimentacao';
+$route['movimentacoes']['GET'] = 'MovimentacaoController/listarMovimentacao';
+
+

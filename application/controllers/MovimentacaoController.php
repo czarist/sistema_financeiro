@@ -22,7 +22,7 @@ class MovimentacaoController extends CI_Controller {
 			$this->load->model('Movimentacao', "movimentacao", true);
 
 			date_default_timezone_set('America/Sao_Paulo');
-			
+
 			$data = [
 				'descricao' => $this->input->post('descricao'),
 				'tipo' => $this->input->post('tipo'),
@@ -34,5 +34,20 @@ class MovimentacaoController extends CI_Controller {
 
 			$this->movimentacao->insert($data);
 		}
+	}
+
+	public function listarMovimentacao() 
+	{
+		$this->load->model('Movimentacao', "movimentacao", true);
+		
+		// echo '<pre>';
+		// var_dump($this->movimentacao->getMovimentacoes());
+		// echo '</pre>';
+
+		$list_movimentacoes = $this->movimentacao->getMovimentacoes();
+		$dados = array(
+			'lista_movimentacoes' => $list_movimentacoes
+		);
+		$this->load->view('movimentacao/listar_movimentacao', $dados);
 	}
 }
