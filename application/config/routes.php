@@ -59,5 +59,8 @@ $route['movimentacao/cadastrar']['GET'] = 'MovimentacaoController/formCadastroMo
 $route['movimentacao/cadastrar']['POST'] = 'MovimentacaoController/inserirMovimentacao';
 $route['movimentacoes']['GET'] = 'MovimentacaoController/listarMovimentacao';
 $route['movimentacao/excluir/(:any)']['GET'] = 'MovimentacaoController/excluirMovimentacao/$1';
+$route['movimentacao/editar/(:any)']['GET'] = 'MovimentacaoController/editarMovimentacao/$1';
+$route['movimentacao/editar/(:any)']['POST'] = 'MovimentacaoController/salvarMovimentacao/$1';
+
 
 

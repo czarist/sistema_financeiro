@@ -41,7 +41,8 @@
 				<?php foreach($lista_movimentacoes as $key_movimentacao) { ?>
 				<tr>
 					<td>
-						<a href="<?php echo base_url("movimentacao/excluir/{$key_movimentacao->id}"); ?>" class="btn btn-danger" type="button">Exluir</a>
+						<a href="<?php echo base_url("movimentacao/excluir/{$key_movimentacao->id}"); ?>" class="btn btn-danger btn-excluir" type="button">Exluir</a>
+						<a href="<?php echo base_url("movimentacao/editar/{$key_movimentacao->id}"); ?>" class="btn btn-primary" type="button">Editar</a>
 					</td>
 					<td><?php echo $key_movimentacao->id; ?></td>
 					<td><?php echo $key_movimentacao->descricao; ?></td>
