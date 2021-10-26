@@ -10,4 +10,9 @@ class Movimentacao extends CI_Model {
 	{
 	 return	$this->db->get('t_transacao')->result();
 	}
+	public function excluir($movimentacao_id)
+	{
+		$this->db->where('id', $movimentacao_id);
+		$this->db->delete('t_transacao');
+	}
 }
