@@ -35,7 +35,7 @@
 				}
 				?>
 
-				<form action="<?= base_url("movimentacao/editar/{$movimentacao->id}") ?>" method="POST">
+				<form enctype="multipart/form-data" action="<?= base_url("movimentacao/editar/{$movimentacao->id}") ?>" method="POST">
 					<div class="form-group ">
 						<label for="descricao">Descrição</label>
 						<input type="text" id="descricao" class="form-control" placeholder="Descrição" name="descricao" value="<?= $movimentacao->descricao ?>" />
@@ -51,6 +51,9 @@
 					<div class="form-group">
 						<label for="data">Data</label>
 						<input type="text" id="data" class="form-control" placeholder="Data" name="data" value="<?= $movimentacao->data ?>" />
+					</div>
+					<div class="form-group">
+						<input type="file" class="ut" id="comprovante" name="comprovante" lang="pt" required>
 					</div>
 					<div class="form-group">
 						<input type="submit" id="salvar" class="btn btn-default w-100" value="Salvar" name="salvar" />

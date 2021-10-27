@@ -11,18 +11,21 @@ class MovimentacaoController extends CI_Controller
 
 	public function inserirMovimentacao()
 	{
-
+		$this->load->model('Movimentacao', "movimentacao", true);
 		$this->form_validation->set_rules('descricao', 'Descrição', 'required');
 		$this->form_validation->set_rules('tipo', 'Tipo', 'required');
 		$this->form_validation->set_rules('data', 'Data', 'required');
 		$this->form_validation->set_rules('valor', 'Valor', 'required|numeric');
+		date_default_timezone_set('America/Sao_Paulo');
 
 		if ($this->form_validation->run() == false) {
 			return $this->load->view('movimentacao/cadastrar_movimentacao');
 		} else {
-			$this->load->model('Movimentacao', "movimentacao", true);
 
-			date_default_timezone_set('America/Sao_Paulo');
+			$config['upload_path'] = './uploads/comprovantes';
+			$config['allowed_types'] = 'gif|jpg|png|pdf';
+
+			$this->upload->initialize($config);
 
 			$data = [
 				'descricao' => $this->input->post('descricao'),
@@ -33,7 +36,18 @@ class MovimentacaoController extends CI_Controller
 				'datahora_ultimaalteracao' => date('Y-m-d H:i:s'),
 			];
 
+			if (!$this->upload->do_upload('comprovante')) {
+				$errors = $this->upload->display_errors();
+				$this->session->set_flashdata('cadastro-movimentacao', $errors);
+				redirect(base_url('movimentacao/cadastrar'));
+			} else {
+				$dados_upload = $this->upload->data();
+				$filename = $dados_upload['file_name'];
+				$data['arquivo_comprovante'] = $config['upload_path'] . $filename;
+			}
+
 			$this->movimentacao->insert($data);
+			redirect(base_url('movimentacao/cadastrar'));
 		}
 	}
 
