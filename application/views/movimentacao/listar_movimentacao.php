@@ -35,29 +35,39 @@
 					<th>
 						Data
 					</th>
+					<th>
+						Comprovante
+					</th>
 				</tr>
 			</thead>
 			<tbody>
-				<?php foreach($lista_movimentacoes as $key_movimentacao) { ?>
-				<tr>
-					<td>
-						<a href="<?php echo base_url("movimentacao/excluir/{$key_movimentacao->id}"); ?>" class="btn btn-danger btn-excluir" type="button">Exluir</a>
-						<a href="<?php echo base_url("movimentacao/editar/{$key_movimentacao->id}"); ?>" class="btn btn-primary" type="button">Editar</a>
-					</td>
-					<td><?php echo $key_movimentacao->id; ?></td>
-					<td><?php echo $key_movimentacao->descricao; ?></td>
-					<td><?php echo $key_movimentacao->tipo; ?></td>
-					<td><?php echo $key_movimentacao->valor; ?></td>
-					<td><?php echo $key_movimentacao->data; ?></td>
-				</tr>
+				<?php foreach ($lista_movimentacoes as $key_movimentacao) { ?>
+					<tr>
+						<td>
+							<a href="<?php echo base_url("movimentacao/excluir/{$key_movimentacao->id}"); ?>" class="btn btn-danger btn-excluir" type="button">Exluir</a>
+							<a href="<?php echo base_url("movimentacao/editar/{$key_movimentacao->id}"); ?>" class="btn btn-primary" type="button">Editar</a>
+						</td>
+						<td><?php echo $key_movimentacao->id; ?></td>
+						<td><?php echo $key_movimentacao->descricao; ?></td>
+						<td><?php echo $key_movimentacao->tipo; ?></td>
+						<td><?php echo $key_movimentacao->valor; ?></td>
+						<td><?php echo $key_movimentacao->data; ?></td>
+						<td><?php
+							if (($key_movimentacao->arquivo_comprovante)) { ?>
+								<a href="<?php echo base_url($key_movimentacao->arquivo_comprovante); ?>" download class="btn btn-success">Ver</a>
+							<?php
+							} else echo 'comprovante indisponível';
+							?>
+						</td>
+					</tr>
 				<?php } ?>
 			</tbody>
 		</table>
 	</div>
 </body>
 <script>
-	$(function () {
-		$('.btn-excluir').click(function (e) {
+	$(function() {
+		$('.btn-excluir').click(function(e) {
 			e.preventDefault();
 			if (confirm("Tem certeza que deseja excluir este registro?")) {
 				const href = $(this).attr('href');
@@ -65,7 +75,6 @@
 			}
 		})
 	});
-
 </script>
 
 </html>

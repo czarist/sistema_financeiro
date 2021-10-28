@@ -22,7 +22,7 @@ class MovimentacaoController extends CI_Controller
 			return $this->load->view('movimentacao/cadastrar_movimentacao');
 		} else {
 
-			$config['upload_path'] = './uploads/comprovantes';
+			$config['upload_path'] = './uploads/comprovantes/';
 			$config['allowed_types'] = 'gif|jpg|png|pdf';
 
 			$this->upload->initialize($config);
@@ -93,6 +93,11 @@ class MovimentacaoController extends CI_Controller
 		if ($this->form_validation->run() === FALSE) {
 			$this->editarMovimentacao($movimentacao_id);
 		} else {
+			$config['upload_path'] = './uploads/comprovantes/';
+			$config['allowed_types'] = 'gif|jpg|png|pdf';
+
+			$this->upload->initialize($config);
+
 			$movimentacao = array(
 				'descricao' => $this->input->post('descricao'),
 				'tipo' => $this->input->post('tipo'),
@@ -102,6 +107,19 @@ class MovimentacaoController extends CI_Controller
 			);
 
 			$this->load->model('Movimentacao', "movimentacao", true);
+
+			if ($_FILES['comprovante']['name']) {
+				if (!$this->upload->do_upload('comprovante')) {
+					$errors = $this->upload->display_errors();
+					$this->session->set_flashdata('cadastro-movimentacao', $errors);
+					redirect(base_url("movimentacao/editar/{$movimentacao_id}"));
+				} else {
+					$dados_upload = $this->upload->data();
+					$filename = $dados_upload['file_name'];
+					$movimentacao['arquivo_comprovante'] = $config['upload_path']  . $filename;
+				}
+			}
+
 			$id = $this->movimentacao->atualizar($movimentacao_id, $movimentacao);
 
 			if ($id === null) {

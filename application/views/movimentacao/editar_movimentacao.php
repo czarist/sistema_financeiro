@@ -53,7 +53,15 @@
 						<input type="text" id="data" class="form-control" placeholder="Data" name="data" value="<?= $movimentacao->data ?>" />
 					</div>
 					<div class="form-group">
-						<input type="file" class="ut" id="comprovante" name="comprovante" lang="pt" required>
+						<input type="file" class="ut" id="comprovante" name="comprovante" lang="pt">
+					</div>
+					<div class="form-group">
+						<?php
+						if (($movimentacao->arquivo_comprovante)) { ?>
+							<a href="<?php echo base_url($movimentacao->arquivo_comprovante); ?>" download class="btn btn-success">Ver</a>
+						<?php
+						} else echo 'comprovante indisponível';
+						?>
 					</div>
 					<div class="form-group">
 						<input type="submit" id="salvar" class="btn btn-default w-100" value="Salvar" name="salvar" />

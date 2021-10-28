@@ -23,7 +23,7 @@
 									' . validation_errors() . '
 								</div>';
 
-					echo $this->session->flashdata('cadastro-movimentacao');
+					echo $this->session->flashdata('edicao-movimentacao');
 				} ?>
 				<form enctype="multipart/form-data" action="cadastrar" method="POST">
 					<div class="form-group mt-5">
@@ -43,7 +43,7 @@
 						<input type="text" id="data" class="form-control" placeholder="Data" name="data" required />
 					</div>
 					<div class="form-group">
-						<input type="file" class="ut" id="comprovante" name="comprovante" lang="pt" required>
+						<input type="file" class="ut" id="comprovante" name="comprovante" lang="pt">
 					</div>
 					<div class="form-group">
 						<input type="submit" id="enviar" class="btn btn-default w-100" name="enviar" />
