@@ -69,7 +69,17 @@ class MovimentacaoController extends CI_Controller
 	public function excluirMovimentacao($movimentacao_id)
 	{
 		$this->load->model('Movimentacao', "movimentacao", true);
-		$this->movimentacao->excluir($movimentacao_id);
+
+		$movimentacao = $this->movimentacao->buscarPorCodigo($movimentacao_id);
+		if (!is_null($movimentacao)) {
+			$this->movimentacao->excluir($movimentacao_id);
+			if (!empty($movimentacao->arquivo_comprovante) && !is_null($movimentacao->arquivo_comprovante)) {
+				unlink($movimentacao->arquivo_comprovante);
+			}
+		} else {
+			$this->session->set_flashdata('listar-movimentacao', 'Ester registro não existe no banco de dados');
+		}
+
 		redirect(base_url('movimentacoes'));
 	}
 

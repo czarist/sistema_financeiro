@@ -16,6 +16,7 @@
 <body>
 	<div class="container mt-5">
 		<h1>Movimentações</h1>
+		<?= $this->session->flashdata('listar-movimentacao'); ?>
 		<table class="table table-bordered">
 			<thead>
 				<tr>

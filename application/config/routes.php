@@ -62,5 +62,11 @@ $route['movimentacao/excluir/(:any)']['GET'] = 'MovimentacaoController/excluirMo
 $route['movimentacao/editar/(:any)']['GET'] = 'MovimentacaoController/editarMovimentacao/$1';
 $route['movimentacao/editar/(:any)']['POST'] = 'MovimentacaoController/salvarMovimentacao/$1';
 
+// usuarios
+
+$route['usuarios/cadastrar']['GET'] = 'UsuarioController/formCadastroUsuario';
+$route['usuarios/cadastrar']['POST'] = 'UsuarioController/inserirUsuario';
+
+
 
 
