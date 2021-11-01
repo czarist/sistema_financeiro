@@ -10,29 +10,24 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <title>Acesse o Sistema</title>
+    <title>Recuperar Senha</title>
 </head>
 
 <body>
     <div class="container mt-5">
         <div class="row">
             <div class="col-lg-6 offset-3">
-                <h1>Acessar</h1>
-
+                <h1>Recuperar Senha</h1>
+                
                 <?= validation_errors() ?>
-                <?= form_open(base_url('usuarios/login')) ?>
-                <?= $this->session->flashdata('login') ?>
+                <?= form_open(base_url('usuarios/recuperar-senha')) ?>
+                <?= $this->session->flashdata('recuperar-senha') ?>
 
                 <div class="form-group">
-                    <label for="email">E-mail</label>
+                    <label class="mb-2" for="email">Digite seu E-mail</label>
                     <input class="form-control" type="email" name="email" id="email" maxlength="100" placeholder="E-mail" required>
                 </div>
-                <div class="form-group">
-                    <label for="senha">Senha</label>
-                    <input class="form-control" type="password" name="senha" id="senha" placeholder="Senha" required>
-                </div>
-                <button class="btn btn-success btn-block">Acessar</button>
-                <a href="<?= base_url('usuarios/recuperar-senha') ?>">Esqueci minha senha</a>
+                <button class="btn btn-success btn-block">Enviar</button>
                 <?= form_close() ?>
             </div>
         </div>

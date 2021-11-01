@@ -90,4 +90,31 @@ class UsuarioController extends CI_Controller
         $this->session->unset_userdata('usuario');
         redirect('usuarios/login');
     }
+
+    public function formRecuperarSenha()
+    {
+        $this->load->view('usuario/recuperar_senha_usuario');
+    }
+
+    public function recuperarSenha()
+    {
+        $this->form_validation->set_rules('email', 'E-mail', 'required|trim');
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->formRecuperarSenha();
+        } else {
+            $email = $this->input->post('email');
+            $token = md5(date('YmdHis') . $email);
+
+            $tokenDefinido = $this->usuario->definirTokenRecuperarSenha($email, $token);
+
+            if ($tokenDefinido) {
+                //mandar email para usuario
+                $this->session->set_flashdata('recuperar-senha', 'enviamos um email para você com instruções para redefinir sua senha');
+            } else {
+                $this->session->set_flashdata('recuperar-senha', 'Não existe usuário cadastrado com este E-mail');
+            }
+            redirect(base_url('usuarios/recuperar-senha'));
+        }
+    }
 }
