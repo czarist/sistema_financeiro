@@ -1,57 +1,55 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<?php
 
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-	<title>cadastro</title>
-</head>
+$page_name = 'Cadastrar';
 
-<body>
-	<div class="container">
-		<div class="row">
-			<div class="col-6 offset-3">
-				<?php
-				if (validation_errors()) {
-					echo
-					'<div class="alert alert-danger mt-1" role="alert">
+$this->load->view('layout/header');
+?>
+
+<script type="text/javascript">
+	window.addEventListener("load", function() {
+		document.getElementById("title").innerHTML = '<?= $page_name ?>';
+	});
+</script>
+
+<div class="container">
+	<div class="row">
+		<div class="col-6 offset-3">
+			<?php
+			if (validation_errors()) {
+				echo
+				'<div class="alert alert-danger mt-1" role="alert">
 									' . validation_errors() . '
 								</div>';
 
-					echo $this->session->flashdata('edicao-movimentacao');
-				} ?>
-				<form enctype="multipart/form-data" action="cadastrar" method="POST">
-					<div class="form-group mt-5">
-						<label for="descricao">Descrição</label>
-						<input type="text" id="descricao" class="form-control" placeholder="Descrição" name="descricao" required />
-					</div>
-					<div class="form-group">
-						<label for="valor">Valor</label>
-						<input type="text" id="valor" class="form-control" placeholder="Valor" name="valor" required />
-					</div>
-					<div class="form-group">
-						<label for="tipo">Tipo</label>
-						<input type="text" id="tipo" class="form-control" placeholder="Tipo" name="tipo" required />
-					</div>
-					<div class="form-group">
-						<label for="data">Data</label>
-						<input type="text" id="data" class="form-control" placeholder="Data" name="data" required />
-					</div>
-					<div class="form-group">
-						<input type="file" class="ut" id="comprovante" name="comprovante" lang="pt">
-					</div>
-					<div class="form-group">
-						<input type="submit" id="enviar" class="btn btn-default w-100" name="enviar" />
-					</div>
-				</form>
-			</div>
+				echo $this->session->flashdata('edicao-movimentacao');
+			} ?>
+			<form enctype="multipart/form-data" action="cadastrar" method="POST">
+				<div class="form-group mt-5">
+					<label for="descricao">Descrição</label>
+					<input type="text" id="descricao" class="form-control" placeholder="Descrição" name="descricao" required />
+				</div>
+				<div class="form-group">
+					<label for="valor">Valor</label>
+					<input type="text" id="valor" class="form-control" placeholder="Valor" name="valor" required />
+				</div>
+				<div class="form-group">
+					<label for="tipo">Tipo</label>
+					<input type="text" id="tipo" class="form-control" placeholder="Tipo" name="tipo" required />
+				</div>
+				<div class="form-group">
+					<label for="data">Data</label>
+					<input type="text" id="data" class="form-control" placeholder="Data" name="data" required />
+				</div>
+				<div class="form-group">
+					<input type="file" class="ut" id="comprovante" name="comprovante" lang="pt">
+				</div>
+				<div class="form-group">
+					<input type="submit" id="enviar" class="btn btn-default w-100" name="enviar" />
+				</div>
+			</form>
 		</div>
 	</div>
+</div>
 </body>
 
 </html>

@@ -11,11 +11,17 @@ class UsuarioController extends CI_Controller
 
     public function formCadastroUsuario()
     {
+        if (usuario_logado() === TRUE) {
+            redirect(base_url('movimentacoes'));
+        }
         $this->load->view('usuario/registrar_usuario');
     }
 
     public function inserirUsuario()
     {
+        if (usuario_logado() === TRUE) {
+            redirect(base_url('movimentacoes'));
+        }
 
         $this->form_validation->set_rules('nome', 'Nome', "required|trim|max_length[100]");
         $this->form_validation->set_rules('email', 'E-mail', "required|trim|is_unique[t_usuario.email]");
@@ -38,5 +44,50 @@ class UsuarioController extends CI_Controller
             }
             redirect(base_url('usuarios/cadastrar'));
         }
+    }
+
+    public function formLoginUsuario()
+    {
+        if (usuario_logado() === TRUE) {
+            redirect(base_url('movimentacoes'));
+        }
+        $this->load->view('usuario/login_usuario');
+    }
+
+    public function loginUsuario()
+    {
+        if (usuario_logado() === TRUE) {
+            redirect(base_url('movimentacoes'));
+        }
+        $this->form_validation->set_rules('email', 'E-mail', 'required|trim');
+        $this->form_validation->set_rules('senha', 'Senha', 'required|trim');
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->formLoginUsuario();
+        } else {
+            $email = $this->input->post('email');
+            $senha = sha1($this->input->post('senha'));
+
+            $usuario = $this->usuario->autenticar($email, $senha);
+
+            if (is_null($usuario)) {
+                $this->session->set_flashdata('login', "<p class='alert alert-danger'>E-mail ou senha inválidos.</p>");
+                redirect(base_url('usuarios/login'));
+            } else {
+                $sessao = array(
+                    'id' => $usuario->id,
+                    'nome' => $usuario->nome,
+                    'email' => $usuario->email
+                );
+                $this->session->set_userdata('usuario', $sessao);
+                redirect(base_url('movimentacoes'));
+            }
+        }
+    }
+
+    public function logoutUsuario()
+    {
+        $this->session->unset_userdata('usuario');
+        redirect('usuarios/login');
     }
 }

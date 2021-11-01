@@ -3,6 +3,15 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class MovimentacaoController extends CI_Controller
 {
+
+	function __construct()
+	{
+		parent::__construct();
+		if (usuario_logado() === FALSE) {
+			redirect(base_url('usuarios/login'));
+		}
+	}
+
 	public function formCadastroMovimentacao()
 	{
 		$this->load->helper('form');
