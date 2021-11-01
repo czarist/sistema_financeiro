@@ -11,9 +11,10 @@ $this->load->view('layout/header');
 	});
 </script>
 
-<div class="container">
+<div class="container mt-5">
 	<div class="row">
 		<div class="col-6 offset-3">
+			<h1 class='mt-5'>Cadastrar Movimentação</h1>
 			<?php
 			if (validation_errors()) {
 				echo
@@ -21,8 +22,9 @@ $this->load->view('layout/header');
 									' . validation_errors() . '
 								</div>';
 
-				echo $this->session->flashdata('edicao-movimentacao');
-			} ?>
+				echo $this->session->flashdata('cadastro-movimentacao');
+			}
+			echo $this->session->flashdata('cadastro-movimentacao'); ?>
 			<form enctype="multipart/form-data" action="cadastrar" method="POST">
 				<div class="form-group mt-5">
 					<label for="descricao">Descrição</label>
@@ -38,7 +40,7 @@ $this->load->view('layout/header');
 				</div>
 				<div class="form-group">
 					<label for="data">Data</label>
-					<input type="text" id="data" class="form-control" placeholder="Data" name="data" required />
+					<input type="date" id="data" class="form-control" placeholder="Data" name="data" required />
 				</div>
 				<div class="form-group">
 					<input type="file" class="ut" id="comprovante" name="comprovante" lang="pt">

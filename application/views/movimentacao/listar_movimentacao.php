@@ -13,8 +13,15 @@ $this->load->view('layout/header');
 
 <main>
 	<div class="container mt-5 p-5">
-		<h1 class='mt-5'>Movimentações</h1>
-		<?= $this->session->flashdata('listar-movimentacao'); ?>
+		<div class="row mt-5">
+			<div class="col-6">
+				<h1>Movimentações</h1>
+			</div>
+			<div class="col-6 d-flex justify-content-end align-items-center">
+				<a class='btn btn-primary ' href="<?php echo base_url('movimentacao/cadastrar') ?>">Cadastrar Movimentacação</a>
+			</div>
+		</div>
+		<p><?= $this->session->flashdata('listar-movimentacao'); ?></p>
 		<table class="table table-bordered">
 			<thead>
 				<tr>

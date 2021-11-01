@@ -11,7 +11,7 @@ $this->load->view('layout/header');
 	});
 </script>
 
-<div class="container">
+<div class="container mt-5">
 	<div class="row">
 		<div class="col-6 offset-3 mt-5">
 			<h1>
@@ -48,7 +48,7 @@ $this->load->view('layout/header');
 				</div>
 				<div class="form-group">
 					<label for="data">Data</label>
-					<input type="text" id="data" class="form-control" placeholder="Data" name="data" value="<?= $movimentacao->data ?>" />
+					<input type="date" id="data" class="form-control" placeholder="Data" name="data" value="<?= $movimentacao->data ?>" />
 				</div>
 				<div class="form-group">
 					<input type="file" class="ut" id="comprovante" name="comprovante" lang="pt">

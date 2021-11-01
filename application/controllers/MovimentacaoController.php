@@ -43,6 +43,7 @@ class MovimentacaoController extends CI_Controller
 				'valor' => $this->input->post('valor'),
 				'datahora_cadastro' => date('Y-m-d H:i:s'),
 				'datahora_ultimaalteracao' => date('Y-m-d H:i:s'),
+				'id_usuario' => getDadosUsuarioLogado()['id']
 			];
 
 			if (!$this->upload->do_upload('comprovante')) {
@@ -55,7 +56,12 @@ class MovimentacaoController extends CI_Controller
 				$data['arquivo_comprovante'] = $config['upload_path'] . $filename;
 			}
 
-			$this->movimentacao->insert($data);
+			$movimentacao_id = $this->movimentacao->insert($data);
+			if (!is_null($movimentacao_id)) {
+				$this->session->set_flashdata('cadastro-movimentacao', 'Movimentação cadastrada com sucesso');
+			} else {
+				$this->session->set_flashdata('cadastro-movimentacao', 'Erro ao cadastrar movimentacao');
+			}
 			redirect(base_url('movimentacao/cadastrar'));
 		}
 	}
@@ -64,11 +70,7 @@ class MovimentacaoController extends CI_Controller
 	{
 		$this->load->model('Movimentacao', "movimentacao", true);
 
-		// echo '<pre>';
-		// var_dump($this->movimentacao->getMovimentacoes());
-		// echo '</pre>';
-
-		$list_movimentacoes = $this->movimentacao->getMovimentacoes();
+		$list_movimentacoes = $this->movimentacao->getMovimentacoes(getDadosUsuarioLogado()['id']);
 		$dados = array(
 			'lista_movimentacoes' => $list_movimentacoes
 		);
@@ -77,9 +79,15 @@ class MovimentacaoController extends CI_Controller
 
 	public function excluirMovimentacao($movimentacao_id)
 	{
+
 		$this->load->model('Movimentacao', "movimentacao", true);
 
 		$movimentacao = $this->movimentacao->buscarPorCodigo($movimentacao_id);
+
+		if ($movimentacao->id_usuario != getDadosUsuarioLogado()['id']) {
+			$this->session->set_flashdata('listar-movimentacao', 'Você não tem permissão para excluir esta registro');
+			redirect(base_url('movimentacoes'));
+		}
 		if (!is_null($movimentacao)) {
 			$this->movimentacao->excluir($movimentacao_id);
 			if (!empty($movimentacao->arquivo_comprovante) && !is_null($movimentacao->arquivo_comprovante)) {
@@ -96,6 +104,11 @@ class MovimentacaoController extends CI_Controller
 	{
 		$this->load->model('Movimentacao', "movimentacao", true);
 		$movimentacao = $this->movimentacao->buscarPorCodigo($movimentacao_id);
+		if ($movimentacao->id_usuario != getDadosUsuarioLogado()['id']) {
+			$this->session->set_flashdata('listar-movimentacao', 'Você não tem permissão para acessar esta página');
+			redirect(base_url('movimentacoes'));
+		}
+
 		$dados = array(
 			'movimentacao' => $movimentacao
 		);
