@@ -23,4 +23,20 @@ class Usuario extends CI_Model
         }
         return FALSE;
     }
+
+    public function validarToken($token)
+    {
+        $usuario = $this->db->get_where('t_usuario', array('token_recuperacao' => $token))->row();
+        return !is_null($usuario);
+    }
+
+    public function salvarNovaSenha($token, $nova_senha)
+    {
+        $this->db->where('token_recuperacao', $token);
+        $this->db->update('t_usuario', array('senha' => $nova_senha, 'token_recuperacao' => NULL));
+        if ($this->db->affected_rows() > 0) {
+            return TRUE;
+        }
+        return FALSE;
+    }
 }

@@ -70,6 +70,9 @@ $route['usuarios/login']['POST'] = 'UsuarioController/loginUsuario';
 $route['usuarios/logout']['GET'] = 'UsuarioController/logoutUsuario';
 $route['usuarios/recuperar-senha']['GET'] = 'UsuarioController/formRecuperarSenha';
 $route['usuarios/recuperar-senha']['POST'] = 'UsuarioController/recuperarSenha';
+$route['usuarios/redefinir-senha/(:any)']['GET'] = 'UsuarioController/formRedefinirSenha/$1';
+$route['usuarios/redefinir-senha/(:any)']['POST'] = 'UsuarioController/redefinirSenha/$1';
+
 
 
 

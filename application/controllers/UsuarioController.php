@@ -109,12 +109,63 @@ class UsuarioController extends CI_Controller
             $tokenDefinido = $this->usuario->definirTokenRecuperarSenha($email, $token);
 
             if ($tokenDefinido) {
+
                 //mandar email para usuario
+
+                $config['protocol'] = 'smtp';
+                $config['smtp_host'] = 'ssl://smtp.googlemail.com';
+                $config['smtp_port'] = 465;
+                $config['smtp_user'] = 'czartrentin@gmail.com';
+                $config['smtp_pass'] = '';
+                $config['charset'] = 'iso-8859-1';
+                $config['mailtype'] = 'html';
+                $config['wordwrap'] = TRUE;
+
+                $this->email->initialize($config);
+
+                $this->email->from($config['smtp-user'] . 'Sistema de Controle Financeiro');
+                $this->email->to($email);
+                $this->email->subject('Recuperação de senha');
+                $this->email->message("Olá, <br> Segue abaixo o link de recuperação de senha <br><a href='" . base_url("usuarios/redefinir-senha/{$token}") . "'>" . base_url("usuarios/redefinir-senha/{$token}") . "</a>");
+                $this->email->send();
+
                 $this->session->set_flashdata('recuperar-senha', 'enviamos um email para você com instruções para redefinir sua senha');
             } else {
                 $this->session->set_flashdata('recuperar-senha', 'Não existe usuário cadastrado com este E-mail');
             }
             redirect(base_url('usuarios/recuperar-senha'));
+        }
+    }
+
+    public function formRedefinirSenha($token)
+    {
+        $tokenValido = $this->usuario->validarToken($token);
+
+        $dados = array(
+            'token' => $token,
+            'tokenValido' => $tokenValido
+        );
+
+        $this->load->view('usuario/redefinir_senha_usuario', $dados);
+    }
+
+    public function redefinirSenha($token)
+    {
+        $this->form_validation->set_rules('senha', 'Senha', 'required|trim|min_length[6]');
+
+        if ($this->form_validation->run() === FALSE) {
+            $this->formRedefinirSenha($token);
+        } else {
+            $senha = sha1($this->input->post('senha'));
+            $senhaSalva = $this->usuario->salvarNovaSenha($token, $senha);
+
+            if ($senhaSalva) {
+                $this->session->set_flashdata('login', 'senha redefinida com sucesso.');
+                redirect(base_url('usuarios/login'));
+            } else {
+                $this->session->set_flashdata('redefinir-senha', 'ocorreu um erro ao salvar nova senha.');
+                redirect(base_url("usuarios/redefinir-senha/{$token}"));
+            }
         }
     }
 }
